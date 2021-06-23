@@ -11,6 +11,12 @@ export class AppService {
     private db: Db,
   ) {}
 
+  getPaymentResult() {
+    const result = ['success', 'fail'];
+    const randomResult = result[Math.floor(Math.random() * result.length)];
+    return randomResult as 'success' | 'fail';
+  }
+
   async confirmOrderPayment(body: ProcessOrderDto): Promise<Payment> {
     const { userId, orderId, amount } = body;
 

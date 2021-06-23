@@ -29,8 +29,7 @@ export class AppController {
     if (!isValid) throw new Error('Invalid signature!');
 
     // random result process payment
-    const result = ['success', 'fail'];
-    const randomResult = result[Math.floor(Math.random() * result.length)];
+    const randomResult = this.appService.getPaymentResult();
     console.log('Random payment result...', randomResult);
 
     let payment: Payment;
