@@ -29,7 +29,7 @@ import { MongoClient, Db, Logger } from 'mongodb';
           } else {
             Logger.setLevel('debug');
             const client = await MongoClient.connect(
-              process.env.MONGO_DSN || 'mongodb://172.23.208.1',
+              process.env.MONGO_DSN || 'mongodb://172.18.144.1',
               {
                 useUnifiedTopology: true,
               },

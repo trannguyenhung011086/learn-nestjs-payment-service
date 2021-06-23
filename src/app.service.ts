@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { Db, ObjectID } from 'mongodb';
 import { CancelOrderDto } from './dtos/cancelOrder.dto';
 import { ProcessOrderDto } from './dtos/processOrder.dto';
@@ -7,6 +8,8 @@ import { Payment } from './interfaces/payment.interface';
 @Injectable()
 export class AppService {
   constructor(
+    @Inject('ORDER_SERVICE')
+    private orderServiceClient: ClientProxy,
     @Inject('DATABASE_CONNECTION')
     private db: Db,
   ) {}
@@ -69,5 +72,15 @@ export class AppService {
       userId: new ObjectID(userId),
       orderId: new ObjectID(orderId),
     });
+  }
+
+  async getOrder(orderId: any) {
+    const res = await this.orderServiceClient
+      .send({ cmd: 'get_order' }, { orderId })
+      .toPromise();
+
+    console.log('Get order...', res);
+
+    return res;
   }
 }
